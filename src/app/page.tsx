@@ -23,16 +23,21 @@ function LeafSVG({ style }: { style?: React.CSSProperties }) {
   );
 }
 
-/* ─── Floating leaf positions ───────────────────────────────────── */
+/* ─── Falling leaf definitions ──────────────────────────────────── */
+/* left = horizontal lane; top is irrelevant (animation starts above viewport).
+   dur = fall duration in seconds; delay staggers them so the screen is always
+   populated — longer delay = leaf is "mid-fall" when page loads.             */
 const LEAVES = [
-  { left: "6%",  top: "8%",  size: 72,  rot: -20, dur: 8,  delay: 0 },
-  { left: "84%", top: "6%",  size: 52,  rot: 30,  dur: 10, delay: 1.5 },
-  { left: "90%", top: "50%", size: 88,  rot: -10, dur: 12, delay: 0.8 },
-  { left: "3%",  top: "60%", size: 60,  rot: 40,  dur: 9,  delay: 2 },
-  { left: "47%", top: "86%", size: 44,  rot: -30, dur: 11, delay: 0.3 },
-  { left: "67%", top: "74%", size: 36,  rot: 15,  dur: 7,  delay: 1.2 },
-  { left: "19%", top: "36%", size: 28,  rot: 50,  dur: 13, delay: 2.5 },
-  { left: "37%", top: "3%",  size: 42,  rot: -45, dur: 9,  delay: 0.6 },
+  { left: "4%",  size: 68, rot: -20, dur: 12, delay: 0   },
+  { left: "14%", size: 40, rot:  25, dur: 16, delay: 4   },
+  { left: "25%", size: 54, rot: -35, dur: 10, delay: 8   },
+  { left: "37%", size: 36, rot:  15, dur: 14, delay: 2   },
+  { left: "50%", size: 72, rot: -15, dur: 11, delay: 6   },
+  { left: "62%", size: 44, rot:  40, dur: 13, delay: 10  },
+  { left: "74%", size: 58, rot: -10, dur: 15, delay: 1   },
+  { left: "85%", size: 32, rot:  30, dur: 9,  delay: 7   },
+  { left: "93%", size: 48, rot: -25, dur: 17, delay: 3   },
+  { left: "8%",  size: 28, rot:  50, dur: 11, delay: 12  },
 ];
 
 /* ─── What we offer ─────────────────────────────────────────────── */
@@ -75,7 +80,7 @@ export default function HomePage() {
         }}
         className="px-5 text-center"
       >
-        {/* Floating leaves — pure CSS animation (translate + transform don't conflict) */}
+        {/* Falling leaves — CSS leaf-fall keyframe drifts each leaf top→bottom */}
         <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
           {LEAVES.map((leaf, i) => (
             <div
@@ -83,13 +88,12 @@ export default function HomePage() {
               style={{
                 position: "absolute",
                 left: leaf.left,
-                top: leaf.top,
+                top: 0,
                 width: leaf.size,
                 height: leaf.size,
                 color: "var(--primary)",
-                opacity: 0.08,
                 transform: `rotate(${leaf.rot}deg)`,
-                animation: `leaf-float ${leaf.dur}s ${leaf.delay}s infinite ease-in-out`,
+                animation: `leaf-fall ${leaf.dur}s ${leaf.delay}s infinite linear`,
               }}
             >
               <LeafSVG style={{ width: "100%", height: "100%" }} />

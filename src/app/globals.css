@@ -63,11 +63,16 @@ body {
   color: var(--foreground);
 }
 
-/* Floating leaf animation — uses `translate` (not transform) so it doesn't
-   conflict with per-leaf `transform: rotate()` applied inline */
-@keyframes leaf-float {
-  0%, 100% { translate: 0 -10px; }
-  50%       { translate: 0  10px; }
+/* Falling leaf animation — leaf drifts from above viewport to below.
+   Uses `translate` (separate from transform) so per-leaf rotate() isn't overridden.
+   Horizontal sway gives a natural drift. Opacity fades in/out to hide the loop seam. */
+@keyframes leaf-fall {
+  0%   { translate:   0px  -100px; opacity: 0;    }
+  6%   { opacity: 0.09; }
+  40%  { translate: -18px   38vh;  }
+  70%  { translate:  22px   72vh;  }
+  92%  { opacity: 0.09; }
+  100% { translate:   8px  112vh;  opacity: 0;    }
 }
 
 /* Polished scrollbar */
