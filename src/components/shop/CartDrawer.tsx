@@ -26,13 +26,15 @@ export default function CartDrawer() {
   const [step, setStep] = useState<Step>("cart");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [errors, setErrors] = useState<{ name?: string; email?: string }>({});
+  const [phone, setPhone] = useState("");
+  const [errors, setErrors] = useState<{ name?: string; email?: string; phone?: string }>({});
   const [paying, setPaying] = useState(false);
 
   const resetCheckout = () => {
     setStep("cart");
     setName("");
     setEmail("");
+    setPhone("");
     setErrors({});
     setPaying(false);
   };
@@ -46,6 +48,8 @@ export default function CartDrawer() {
     const e: typeof errors = {};
     if (!name.trim() || name.trim().length < 2) e.name = "Enter your full name";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) e.email = "Enter a valid email address";
+    const digits = phone.replace(/\D/g, "");
+    if (digits.length < 10) e.phone = "Enter a valid phone number (min 10 digits)";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -65,6 +69,7 @@ export default function CartDrawer() {
         metadata: {
           custom_fields: [
             { display_name: "Customer Name", variable_name: "customer_name", value: name.trim() },
+            { display_name: "Phone Number", variable_name: "phone_number", value: phone.trim() },
           ],
         },
         onClose: () => setPaying(false),
@@ -186,6 +191,27 @@ export default function CartDrawer() {
                   onBlur={(e) => { if (!errors.email) e.currentTarget.style.borderColor = "var(--border)"; }}
                 />
                 {errors.email && <p className="text-xs text-red-500">{errors.email}</p>}
+              </div>
+
+              <div className="flex flex-col gap-1.5">
+                <label className="text-sm font-medium text-foreground">Phone Number</label>
+                <input
+                  type="tel"
+                  value={phone}
+                  onChange={(e) => { setPhone(e.target.value); setErrors((prev) => ({ ...prev, phone: undefined })); }}
+                  placeholder="e.g. 0244 123 456"
+                  inputMode="tel"
+                  autoComplete="tel"
+                  className="w-full px-3 py-3 text-sm rounded-lg border outline-none transition-all"
+                  style={{
+                    backgroundColor: "var(--surface)",
+                    color: "var(--foreground)",
+                    borderColor: errors.phone ? "#f87171" : "var(--border)",
+                  }}
+                  onFocus={(e) => { if (!errors.phone) e.currentTarget.style.borderColor = "var(--primary)"; }}
+                  onBlur={(e) => { if (!errors.phone) e.currentTarget.style.borderColor = "var(--border)"; }}
+                />
+                {errors.phone && <p className="text-xs text-red-500">{errors.phone}</p>}
               </div>
             </div>
 
