@@ -20,9 +20,15 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "RadianceCare",
+  title: { default: "RadianceCare", template: "%s — RadianceCare" },
   description:
     "Premium wellness products, expert coaching sessions, and personalized health plans.",
+  icons: {
+    icon: "/icon.svg",
+    shortcut: "/icon.svg",
+    apple: "/icon.svg",
+  },
+  themeColor: "#B07A2F",
 };
 
 export default function RootLayout({
