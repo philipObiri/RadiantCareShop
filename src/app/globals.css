@@ -63,16 +63,50 @@ body {
   color: var(--foreground);
 }
 
-/* Falling leaf animation — leaf drifts from above viewport to below.
-   Uses `translate` (separate from transform) so per-leaf rotate() isn't overridden.
-   Horizontal sway gives a natural drift. Opacity fades in/out to hide the loop seam. */
-@keyframes leaf-fall {
-  0%   { translate:   0px  -100px; opacity: 0;    }
-  6%   { opacity: 0.09; }
-  40%  { translate: -18px   38vh;  }
-  70%  { translate:  22px   72vh;  }
-  92%  { opacity: 0.09; }
-  100% { translate:   8px  112vh;  opacity: 0;    }
+/* Ambient leaf float — leaves gently drift in place without falling.
+   Uses `translate` so per-leaf rotate() is not overridden. */
+@keyframes leaf-float {
+  0%   { translate:   0px  0px;  }
+  25%  { translate:  -8px -12px; }
+  50%  { translate:   6px -20px; }
+  75%  { translate: -10px  -8px; }
+  100% { translate:   0px   0px; }
+}
+
+/* ── Glassmorphism utilities ─────────────────────────────────────── */
+.glass-nav {
+  background: rgba(250, 248, 245, 0.72);
+  backdrop-filter: blur(20px) saturate(1.8);
+  -webkit-backdrop-filter: blur(20px) saturate(1.8);
+}
+.dark .glass-nav {
+  background: rgba(15, 14, 13, 0.78);
+  backdrop-filter: blur(20px) saturate(1.5);
+  -webkit-backdrop-filter: blur(20px) saturate(1.5);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(22px) saturate(1.9);
+  -webkit-backdrop-filter: blur(22px) saturate(1.9);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  box-shadow: 0 8px 32px rgba(176, 122, 47, 0.07), 0 1px 0 rgba(255, 255, 255, 0.6) inset;
+}
+.dark .glass-card {
+  background: rgba(28, 26, 24, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.glass-pill {
+  background: rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.dark .glass-pill {
+  background: rgba(28, 26, 24, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 /* Polished scrollbar */

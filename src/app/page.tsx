@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { ArrowRight, ShoppingBag, CalendarCheck, Leaf, Heart, Zap } from "lucide-react";
+import { ArrowRight, ShoppingBag, CalendarCheck, Heart } from "lucide-react";
 
 /* ─── Leaf SVG ──────────────────────────────────────────────────── */
 function LeafSVG({ style }: { style?: React.CSSProperties }) {
@@ -23,21 +23,18 @@ function LeafSVG({ style }: { style?: React.CSSProperties }) {
   );
 }
 
-/* ─── Falling leaf definitions ──────────────────────────────────── */
-/* left = horizontal lane; top is irrelevant (animation starts above viewport).
-   dur = fall duration in seconds; delay staggers them so the screen is always
-   populated — longer delay = leaf is "mid-fall" when page loads.             */
+/* ─── Ambient leaf positions ────────────────────────────────────── */
 const LEAVES = [
-  { left: "4%",  size: 68, rot: -20, dur: 12, delay: 0   },
-  { left: "14%", size: 40, rot:  25, dur: 16, delay: 4   },
-  { left: "25%", size: 54, rot: -35, dur: 10, delay: 8   },
-  { left: "37%", size: 36, rot:  15, dur: 14, delay: 2   },
-  { left: "50%", size: 72, rot: -15, dur: 11, delay: 6   },
-  { left: "62%", size: 44, rot:  40, dur: 13, delay: 10  },
-  { left: "74%", size: 58, rot: -10, dur: 15, delay: 1   },
-  { left: "85%", size: 32, rot:  30, dur: 9,  delay: 7   },
-  { left: "93%", size: 48, rot: -25, dur: 17, delay: 3   },
-  { left: "8%",  size: 28, rot:  50, dur: 11, delay: 12  },
+  { left: "4%",  top: "12%", size: 68, rot: -20, dur: 7,  delay: 0   },
+  { left: "14%", top: "68%", size: 40, rot:  25, dur: 9,  delay: 1.5 },
+  { left: "25%", top: "35%", size: 54, rot: -35, dur: 8,  delay: 3   },
+  { left: "37%", top: "78%", size: 36, rot:  15, dur: 10, delay: 0.8 },
+  { left: "50%", top: "20%", size: 72, rot: -15, dur: 7,  delay: 4   },
+  { left: "62%", top: "55%", size: 44, rot:  40, dur: 9,  delay: 2   },
+  { left: "74%", top: "18%", size: 58, rot: -10, dur: 8,  delay: 5   },
+  { left: "85%", top: "70%", size: 32, rot:  30, dur: 6,  delay: 1   },
+  { left: "93%", top: "40%", size: 48, rot: -25, dur: 11, delay: 3.5 },
+  { left: "8%",  top: "85%", size: 28, rot:  50, dur: 7,  delay: 6   },
 ];
 
 /* ─── What we offer ─────────────────────────────────────────────── */
@@ -73,14 +70,14 @@ export default function HomePage() {
       <section
         style={{
           position: "relative",
-          minHeight: "100vh",
+          minHeight: "100dvh",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
         }}
-        className="px-5 text-center"
+        className="px-4 sm:px-6 text-center"
       >
-        {/* Falling leaves — CSS leaf-fall keyframe drifts each leaf top→bottom */}
+        {/* Ambient leaves */}
         <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
           {LEAVES.map((leaf, i) => (
             <div
@@ -88,12 +85,13 @@ export default function HomePage() {
               style={{
                 position: "absolute",
                 left: leaf.left,
-                top: 0,
+                top: leaf.top,
                 width: leaf.size,
                 height: leaf.size,
                 color: "var(--primary)",
+                opacity: 0.05,
                 transform: `rotate(${leaf.rot}deg)`,
-                animation: `leaf-fall ${leaf.dur}s ${leaf.delay}s infinite linear`,
+                animation: `leaf-float ${leaf.dur}s ${leaf.delay}s infinite ease-in-out`,
               }}
             >
               <LeafSVG style={{ width: "100%", height: "100%" }} />
@@ -107,7 +105,7 @@ export default function HomePage() {
               top: "35%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              width: 700,
+              width: "min(700px, 100vw)",
               height: 600,
               borderRadius: "50%",
               background: "radial-gradient(ellipse at center, rgba(176,122,47,0.1) 0%, transparent 68%)",
@@ -119,24 +117,28 @@ export default function HomePage() {
         {/* Content */}
         <div style={{ position: "relative", zIndex: 1, maxWidth: 780, width: "100%" }}>
 
-          {/* Eyebrow */}
-          <motion.p
+          {/* Eyebrow — glass pill */}
+          <motion.div
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.45, ease: "easeOut" }}
-            className="text-xs font-bold tracking-[0.2em] uppercase mb-5"
-            style={{ color: "var(--primary)" }}
+            className="inline-flex mb-5"
           >
-            Premium Wellness Platform
-          </motion.p>
+            <span
+              className="glass-pill text-xs font-bold tracking-[0.18em] uppercase px-4 py-1.5 rounded-full"
+              style={{ color: "var(--primary)" }}
+            >
+              Premium Wellness Platform
+            </span>
+          </motion.div>
 
           {/* Headline */}
           <motion.h1
             initial={{ opacity: 0, y: 26 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1, ease: "easeOut" }}
-            className="font-display font-bold text-foreground leading-none tracking-tight mb-6"
-            style={{ fontSize: "clamp(2.4rem, 6.5vw, 4.6rem)" }}
+            className="font-display font-bold text-foreground leading-none tracking-tight mb-5"
+            style={{ fontSize: "clamp(2.2rem, 7vw, 4.6rem)" }}
           >
             Feel Better.{" "}
             <span style={{ color: "var(--primary)", fontStyle: "italic" }}>Look Radiant.</span>
@@ -149,7 +151,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55, delay: 0.2, ease: "easeOut" }}
-            className="text-muted text-lg md:text-xl max-w-xl mx-auto mb-10 leading-relaxed"
+            className="text-muted text-base sm:text-lg md:text-xl max-w-lg mx-auto mb-9 leading-relaxed px-2"
           >
             Shop premium wellness products, book a personal coaching session,
             or start a guided health plan — all in one place.
@@ -160,11 +162,11 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3, ease: "easeOut" }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6"
+            className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-7 px-2 sm:px-0"
           >
             <Link
               href="/book"
-              className="inline-flex items-center gap-2.5 text-white px-8 py-4 rounded-full text-base font-bold transition-all duration-200 active:scale-[0.97] w-full sm:w-auto justify-center"
+              className="inline-flex items-center gap-2.5 text-white px-7 py-4 rounded-full text-sm sm:text-base font-bold transition-all duration-200 active:scale-[0.97] w-full sm:w-auto justify-center"
               style={{
                 backgroundColor: "var(--primary)",
                 boxShadow: "0 8px 36px rgba(176,122,47,0.38)",
@@ -172,42 +174,28 @@ export default function HomePage() {
               onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--primary-hover)")}
               onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--primary)")}
             >
-              <CalendarCheck className="w-4 h-4" />
+              <CalendarCheck className="w-4 h-4 shrink-0" />
               Book a Session
             </Link>
             <Link
               href="/shop"
-              className="inline-flex items-center gap-2.5 text-foreground px-8 py-4 rounded-full text-base font-semibold transition-all duration-200 active:scale-[0.97] w-full sm:w-auto justify-center border"
-              style={{ borderColor: "var(--border)", backgroundColor: "var(--surface)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "var(--surface-raised)")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "var(--surface)")}
+              className="inline-flex items-center gap-2.5 text-foreground px-7 py-4 rounded-full text-sm sm:text-base font-semibold transition-all duration-200 active:scale-[0.97] w-full sm:w-auto justify-center glass-pill"
+              style={{ border: "2px solid var(--primary)", color: "var(--primary)" }}
+              onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "var(--primary-light)"; }}
+              onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = ""; }}
             >
-              <ShoppingBag className="w-4 h-4" />
+              <ShoppingBag className="w-4 h-4 shrink-0" />
               Shop Products
               <ArrowRight className="w-3.5 h-3.5 opacity-60" />
             </Link>
           </motion.div>
 
-          {/* Social proof strip */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.5, delay: 0.45 }}
-            className="flex items-center justify-center gap-6 flex-wrap"
-          >
-            {["200+ clients", "15-min sessions", "Free consultation", "Loyalty rewards"].map((txt) => (
-              <span key={txt} className="flex items-center gap-1.5 text-xs text-muted font-medium">
-                <span style={{ width: 5, height: 5, borderRadius: "50%", backgroundColor: "var(--primary)", display: "inline-block", opacity: 0.7 }} />
-                {txt}
-              </span>
-            ))}
-          </motion.div>
         </div>
       </section>
 
       {/* ── WHAT WE OFFER ────────────────────────────────────────── */}
       <section
-        className="py-20 px-5"
+        className="py-16 sm:py-20 px-4 sm:px-6"
         style={{ backgroundColor: "var(--surface-raised)" }}
       >
         <div className="max-w-5xl mx-auto">
@@ -216,12 +204,12 @@ export default function HomePage() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ duration: 0.5, ease: "easeOut" }}
-            className="font-display text-2xl md:text-3xl font-bold text-foreground text-center mb-10"
+            className="font-display text-2xl sm:text-3xl font-bold text-foreground text-center mb-10"
           >
             Everything you need to thrive
           </motion.h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
             {PILLARS.map(({ Icon, title, desc, href, cta }, i) => (
               <motion.div
                 key={title}
@@ -230,11 +218,10 @@ export default function HomePage() {
                 viewport={{ once: true, margin: "-40px" }}
                 transition={{ duration: 0.45, delay: i * 0.09, ease: "easeOut" }}
                 whileHover={{ y: -4 }}
-                className="rounded-2xl p-7 border flex flex-col"
-                style={{ backgroundColor: "var(--surface)", borderColor: "var(--border)" }}
+                className="glass-card rounded-2xl p-6 sm:p-7 flex flex-col"
               >
                 <div
-                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-5"
+                  className="w-11 h-11 rounded-xl flex items-center justify-center mb-5 shrink-0"
                   style={{ backgroundColor: "var(--primary-light)", color: "var(--primary)" }}
                 >
                   <Icon className="w-5 h-5" />

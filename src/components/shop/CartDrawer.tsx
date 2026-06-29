@@ -137,7 +137,7 @@ export default function CartDrawer() {
             </button>
 
             {/* Order summary */}
-            <div className="rounded-xl border border-border p-4" style={{ backgroundColor: "var(--surface-raised)" }}>
+            <div className="rounded-xl border p-4" style={{ backgroundColor: "var(--surface-raised)", borderColor: "var(--border)" }}>
               <p className="text-xs font-semibold text-muted uppercase tracking-widest mb-3">Order Summary</p>
               <div className="space-y-2">
                 {items.map((item) => (

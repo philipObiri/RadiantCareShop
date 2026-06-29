@@ -1,9 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none">
-  <!-- Amber background pill -->
   <rect width="32" height="32" rx="8" fill="#B07A2F"/>
-  <!-- Sparkle: center diamond -->
-  <path d="M16 7 L17.4 14.6 L25 16 L17.4 17.4 L16 25 L14.6 17.4 L7 16 L14.6 14.6 Z" fill="white" opacity="0.95"/>
-  <!-- Small accent dots -->
-  <circle cx="25.5" cy="7.5" r="1.5" fill="white" opacity="0.55"/>
-  <circle cx="6.5" cy="25.5" r="1" fill="white" opacity="0.4"/>
+  <!-- Heart -->
+  <path d="M16 24C16 24 7 17.5 7 11.5C7 8.5 9.5 6 12.5 6C14 6 15.2 6.8 16 8C16.8 6.8 18 6 19.5 6C22.5 6 25 8.5 25 11.5C25 17.5 16 24 16 24Z" fill="white" opacity="0.92"/>
+  <!-- EKG pulse line -->
+  <polyline points="9,12.5 11.5,12.5 13,9.5 14.5,15.5 16,11 17.2,14 18.5,12.5 23,12.5" stroke="#B07A2F" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
 </svg>

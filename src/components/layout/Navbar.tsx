@@ -33,15 +33,16 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 glass-nav",
         scrolled
-          ? "bg-surface/90 backdrop-blur-md border-b border-border shadow-sm"
-          : "bg-surface/80 backdrop-blur-sm"
+          ? "border-b shadow-sm"
+          : "border-b border-transparent"
       )}
+      style={scrolled ? { borderColor: "var(--border)" } : undefined}
     >
-      <nav className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+      <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link href="/" className="flex items-center gap-2.5 group shrink-0">
           <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
             <Sparkles className="w-4 h-4 text-white" strokeWidth={2} />
           </div>
@@ -69,7 +70,7 @@ export default function Navbar() {
         </div>
 
         {/* Right actions */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           <ThemeToggle />
 
           {/* Cart */}
@@ -86,19 +87,20 @@ export default function Navbar() {
             )}
           </button>
 
-          {/* Book CTA */}
+          {/* Book CTA — desktop */}
           <Link
             href="/book"
             className="hidden md:inline-flex items-center gap-1.5 bg-primary text-white px-4 py-2 rounded-full text-sm font-semibold hover:bg-primary-hover active:scale-[0.97] transition-all"
           >
             <CalendarCheck className="w-4 h-4" />
-              Book Session
+            Book Session
           </Link>
 
           {/* Mobile menu toggle */}
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="md:hidden p-2 rounded-lg hover:bg-surface-raised transition-colors"
+            aria-label="Toggle menu"
           >
             {mobileOpen ? (
               <X className="w-5 h-5 text-foreground" />
@@ -109,15 +111,23 @@ export default function Navbar() {
         </div>
       </nav>
 
-      {/* Mobile menu */}
+      {/* Mobile menu — glass panel */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border bg-surface px-5 py-4 flex flex-col gap-3">
+        <div
+          className="md:hidden glass-nav border-t px-4 py-5 flex flex-col gap-2"
+          style={{ borderColor: "var(--border)" }}
+        >
           {NAV_LINKS.map(({ href, label }) => (
             <Link
               key={href}
               href={href}
               onClick={() => setMobileOpen(false)}
-              className="text-sm font-medium text-muted hover:text-foreground transition-colors"
+              className={cn(
+                "text-sm font-medium px-3 py-2.5 rounded-xl transition-colors",
+                pathname === href
+                  ? "text-primary bg-primary/10"
+                  : "text-muted hover:text-foreground hover:bg-surface-raised"
+              )}
             >
               {label}
             </Link>
@@ -125,10 +135,10 @@ export default function Navbar() {
           <Link
             href="/book"
             onClick={() => setMobileOpen(false)}
-            className="mt-1 inline-flex items-center justify-center gap-1.5 bg-primary text-white px-4 py-2.5 rounded-full text-sm font-semibold"
+            className="mt-2 inline-flex items-center justify-center gap-2 bg-primary text-white px-4 py-3 rounded-full text-sm font-bold active:scale-[0.97] transition-all"
           >
             <CalendarCheck className="w-4 h-4" />
-              Book a Session
+            Book a Session
           </Link>
         </div>
       )}
