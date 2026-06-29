@@ -75,10 +75,10 @@ export default function HomePage() {
         }}
         className="px-5 text-center"
       >
-        {/* Floating leaves */}
+        {/* Floating leaves — pure CSS animation (translate + transform don't conflict) */}
         <div style={{ position: "absolute", inset: 0, overflow: "hidden", pointerEvents: "none", zIndex: 0 }}>
           {LEAVES.map((leaf, i) => (
-            <motion.div
+            <div
               key={i}
               style={{
                 position: "absolute",
@@ -88,19 +88,12 @@ export default function HomePage() {
                 height: leaf.size,
                 color: "var(--primary)",
                 opacity: 0.08,
-              }}
-              initial={{ y: -8, rotate: leaf.rot - 4 }}
-              animate={{ y: 8, rotate: leaf.rot + 4 }}
-              transition={{
-                duration: leaf.dur,
-                delay: leaf.delay,
-                repeat: Infinity,
-                repeatType: "reverse",
-                ease: "easeInOut",
+                transform: `rotate(${leaf.rot}deg)`,
+                animation: `leaf-float ${leaf.dur}s ${leaf.delay}s infinite ease-in-out`,
               }}
             >
               <LeafSVG style={{ width: "100%", height: "100%" }} />
-            </motion.div>
+            </div>
           ))}
 
           {/* Radial glow */}

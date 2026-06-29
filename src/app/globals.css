@@ -46,7 +46,7 @@
   --color-gold:           var(--gold);
   --color-gold-light:     var(--gold-light);
 
-  --font-display: var(--font-playfair), "Playfair Display", Georgia, serif;
+  --font-display: var(--font-cormorant), "Cormorant Garamond", Georgia, serif;
   --font-sans:    var(--font-inter), "Inter", system-ui, sans-serif;
 }
 
@@ -61,6 +61,13 @@ html {
 body {
   background-color: var(--background);
   color: var(--foreground);
+}
+
+/* Floating leaf animation — uses `translate` (not transform) so it doesn't
+   conflict with per-leaf `transform: rotate()` applied inline */
+@keyframes leaf-float {
+  0%, 100% { translate: 0 -10px; }
+  50%       { translate: 0  10px; }
 }
 
 /* Polished scrollbar */
