@@ -1,16 +1,2 @@
-import { type NextRequest } from "next/server";
-import { updateSession } from "@/utils/supabase/middleware";
-
-export async function middleware(request: NextRequest) {
-  return await updateSession(request);
-}
-
-export const config = {
-  matcher: [
-    /*
-     * Match all paths except static files and Next.js internals.
-     * Required so Supabase can refresh the session cookie on every navigation.
-     */
-    "/((?!_next/static|_next/image|favicon.ico|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
-};
+// Deprecated in Next.js 16 — session handling moved to src/proxy.ts
+export {};

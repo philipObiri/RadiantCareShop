@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Cormorant_Garamond, Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
@@ -19,16 +19,33 @@ const inter = Inter({
   display: "swap",
 });
 
+export const viewport: Viewport = {
+  themeColor: "#B07A2F",
+};
+
 export const metadata: Metadata = {
   title: { default: "RadianceCare", template: "%s — RadianceCare" },
   description:
     "Premium wellness products, expert coaching sessions, and personalized health plans.",
+  keywords: ["wellness", "health", "coaching", "supplements", "detox", "nutrition", "Ghana"],
+  openGraph: {
+    type: "website",
+    siteName: "RadianceCare",
+    title: "RadianceCare — Premium Wellness Platform",
+    description:
+      "Shop premium wellness products, book a personal coaching session, or start a guided health plan.",
+    images: [{ url: "/icon.svg", width: 32, height: 32, alt: "RadianceCare logo" }],
+  },
+  twitter: {
+    card: "summary",
+    title: "RadianceCare — Premium Wellness Platform",
+    description: "Shop premium wellness products and book expert coaching sessions.",
+  },
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
     apple: "/icon.svg",
   },
-  themeColor: "#B07A2F",
 };
 
 export default function RootLayout({
