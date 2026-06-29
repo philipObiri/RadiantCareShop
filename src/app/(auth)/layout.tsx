@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { Sparkles } from "lucide-react";
+import Image from "next/image";
 
 export default function AuthLayout({ children }: { children: ReactNode }) {
   return (
@@ -10,12 +10,13 @@ export default function AuthLayout({ children }: { children: ReactNode }) {
     >
       {/* Logo */}
       <Link href="/" className="flex items-center gap-2.5 mb-8 group">
-        <div
-          className="w-9 h-9 rounded-xl flex items-center justify-center transition-transform group-hover:scale-105"
-          style={{ backgroundColor: "var(--primary)" }}
-        >
-          <Sparkles className="w-4 h-4 text-white" strokeWidth={2} />
-        </div>
+        <Image
+          src="/icon.svg"
+          alt="RadianceCare"
+          width={36}
+          height={36}
+          className="transition-transform group-hover:scale-105"
+        />
         <span className="font-display text-xl font-semibold text-foreground">
           RadianceCare
         </span>

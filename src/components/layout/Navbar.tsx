@@ -1,8 +1,9 @@
 "use client";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ShoppingCart, Sparkles, Menu, X, CalendarCheck } from "lucide-react";
+import { ShoppingCart, Menu, X, CalendarCheck } from "lucide-react";
 import { useCartStore } from "@/store/cart";
 import ThemeToggle from "./ThemeToggle";
 import { cn } from "@/lib/utils";
@@ -43,9 +44,13 @@ export default function Navbar() {
       <nav className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2.5 group shrink-0">
-          <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center transition-transform group-hover:scale-105">
-            <Sparkles className="w-4 h-4 text-white" strokeWidth={2} />
-          </div>
+          <Image
+            src="/icon.svg"
+            alt="RadianceCare logo"
+            width={32}
+            height={32}
+            className="transition-transform group-hover:scale-105"
+          />
           <span className="font-display text-[17px] font-semibold text-foreground leading-none">
             RadianceCare
           </span>
