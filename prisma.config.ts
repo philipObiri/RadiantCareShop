@@ -2,7 +2,7 @@ import path from "node:path";
 import { config as dotenv } from "dotenv";
 import { defineConfig } from "prisma/config";
 
-// Prisma CLI doesn't auto-load .env.local — load it explicitly
+// Prisma CLI doesn't auto-load .env.local — load it for local dev (no-op on Vercel)
 dotenv({ path: path.resolve(process.cwd(), ".env.local"), override: false });
 
 export default defineConfig({
